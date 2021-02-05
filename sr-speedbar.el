@@ -78,6 +78,10 @@
 ;;      M-x customize-group RET sr-speedbar RET
 
 ;;; Change log:
+;; * 04 Feb 2021:
+;;   * Pierre Rouleau <prouleau001@gmail.com>
+;;     * Replaced incf by the cl-incf equivalent, removing the need to require cl, which is now obsolete.
+;;
 ;; * 07 Jan 2021:
 ;;   * Jacob First <jacob.first@member.fsf.org>
 ;;     * Fix inconsistent window selection when opening speedbar on the right side vs. on the left.
@@ -273,8 +277,6 @@
 (require 'speedbar)
 (require 'advice)
 (require 'cl-lib)
-(eval-when-compile
-  (require 'cl))
 
 ;;; Code:
 
@@ -576,9 +578,9 @@ If WINDOW is nil, get current window."
     (walk-windows
      (lambda (w)
        (with-selected-window w
-         (incf window-number)
+         (cl-incf window-number)
          (if (window-dedicated-p w)
-             (incf dedicated-window-number)))))
+             (cl-incf dedicated-window-number)))))
     (if (and (> dedicated-window-number 0)
              (= (- window-number dedicated-window-number) 1))
         t nil)))
